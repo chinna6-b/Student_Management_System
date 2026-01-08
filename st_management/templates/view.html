@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Students</h2>
+{% if students|length == 0 %}
+    <p class="text-muted">No students found. <a href="{{ url_for('add_student') }}">Add one?</a></p>
+{% else %}
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Age</th>
+            <th>Grade</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.roll_no }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.grade }}</td>
+            <td>
+                <a href="{{ url_for('update_student', roll_no=student.roll_no) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ url_for('delete_student', roll_no=student.roll_no) }}" 
+                   class="btn btn-sm btn-danger" 
+                   onclick="return confirm('Delete {{ student.name }}?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
